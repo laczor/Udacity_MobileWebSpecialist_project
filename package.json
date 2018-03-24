@@ -1,0 +1,18 @@
+{
+  "name": "udacity_restaurant_01",
+  "version": "1.0.0",
+  "description": "First project for the udacity Mobile Web specialist nanodegree",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js  || node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Laczovics Istvan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  }
+}
