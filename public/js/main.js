@@ -19,7 +19,7 @@ var markers = []
 
   var indexController = this;
 
-  navigator.serviceWorker.register('/public/js/sw.js').then(function(reg) {
+  navigator.serviceWorker.register('sw.js').then(function(reg) {
     if (!navigator.serviceWorker.controller) {
       return;
     }
