@@ -79,7 +79,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
   for (let key in operatingHours) {
     const row = document.createElement('tr');
 
-    const day = document.createElement('td');
+    const day = document.createElement('th');
     day.innerHTML = key;
     row.appendChild(day);
 
@@ -118,20 +118,28 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
+  const header = document.createElement('div');
+  header.className="review-header";
   const name = document.createElement('p');
   name.innerHTML = review.name;
-  li.appendChild(name);
+  name.className="review-name";
+  header.appendChild(name);
 
   const date = document.createElement('p');
+  date.className="review-date";
   date.innerHTML = review.date;
-  li.appendChild(date);
+  header.appendChild(date);
+
+  li.appendChild(header);
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
+  rating.className="review-rating";
   li.appendChild(rating);
 
   const comments = document.createElement('p');
   comments.innerHTML = review.comments;
+  comments.className="review-text";
   li.appendChild(comments);
 
   return li;
@@ -144,6 +152,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
+  li.setAttribute("aria-current","page");
   breadcrumb.appendChild(li);
 }
 

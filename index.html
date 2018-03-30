@@ -16,14 +16,17 @@
   </header> 
 
   <main id="maincontent">
-    <section id="map-container" aria-hidden="true">
-      <div id="map" title="google-map" aria-hidden="true"></div>
+    <a class="skip-link" href="#options">Skip map and go to options</a>
+
+    <section id="map-container">
+      <div id="map" title="google-map"></div>
     </section>
+
     <section>
       <div class="filter-options">
 
         <h2>Filter Results</h2>
-        <div class="filter-selections">
+        <div id="options"class="filter-selections">
 
           <select  aria-label="neighborhoods select options" id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
             <option value="all">All Neighborhoods</option>

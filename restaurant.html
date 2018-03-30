@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- Normalize.css for better cross-browser consistency -->
@@ -7,6 +7,7 @@
   <!-- Main CSS file -->
   <link rel="stylesheet" href="public/css/styles.css" type="text/css">
   <title>Restaurant Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body class="inside">
@@ -27,20 +28,27 @@
 
   <!-- Beginning main -->
   <main id="maincontent">
-    <!-- Beginning map -->
-    <section id="map-container">
-      <div id="map"></div>
-    </section>
-    <!-- End map -->
+
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h1 id="restaurant-name"></h1>
-      <img id="restaurant-img">
-      <p id="restaurant-cuisine"></p>
-      <p id="restaurant-address"></p>
+      <div class="restaurant-divider">
+
+        <h1 id="restaurant-name"></h1>
+        <p id="restaurant-address"></p>
+        <img id="restaurant-img">
+        <p id="restaurant-cuisine"></p>
+
+      </div>
       <table id="restaurant-hours"></table>
     </section>
     <!-- end restaurant -->
+    <!-- Beginning map -->
+    <section id="map-container">
+        <a class="skip-link" href="#reviews-container">Skip map and go to reviews</a>
+
+        <div id="map" title="google-map"></div>
+      </section>
+      <!-- End map -->
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <ul id="reviews-list"></ul>
