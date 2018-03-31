@@ -90,7 +90,7 @@ nav h1 a {
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+    color: #024F92;
     text-decoration: none;
 }
 
@@ -135,9 +135,10 @@ nav h1 a {
   font-size: 11pt;
   height: 35px;
   letter-spacing: 0;
-  margin: 10px;
+  margin: 10px 5px;
   padding: 0 10px;
-  width: 200px;
+  max-width: 200px;
+  width: 48%;
   text-align: center;
   border-radius: 10px;
 }
@@ -368,6 +369,9 @@ margin: 10px 20px;
 }
 
 .skip-link:focus {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
   top: 0; /* Now the link will appear */
 }
 

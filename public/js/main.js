@@ -5,14 +5,16 @@ var map
 var markers = []
 
 
-
-
+/**
+ * Adding a title to the created google Map
+ * 
+ */
+window.onload = function () { const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; }
 
 /**
  * Service worker
  *  
  */
-
 
  startServiceWorker =() =>{
   if (!navigator.serviceWorker) return;
@@ -163,11 +165,11 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.alt=restaurant.name;
+  image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 

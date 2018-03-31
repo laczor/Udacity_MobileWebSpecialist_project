@@ -2,6 +2,12 @@ let restaurant;
 var map;
 
 /**
+ * Adding a title to the created google Map
+ * 
+ */
+window.onload = function () { const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; }
+
+/**
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
@@ -57,7 +63,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  image.alt =restaurant.name;
+  image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
   const cuisine = document.getElementById('restaurant-cuisine');
@@ -96,7 +102,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
+  const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
