@@ -1,5 +1,6 @@
 
-// import idb from 'idb';
+import idb from 'idb';
+
 let restaurants,
   neighborhoods,
   cuisines
