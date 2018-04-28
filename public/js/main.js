@@ -1,4 +1,3 @@
-import idb from 'idb';
 
 
 let restaurants,
@@ -19,6 +18,8 @@ window.onload = function () { const iframe = document.querySelector('iframe'); i
  *  
  */
 
+
+console.log('window',window);
  startServiceWorker =() =>{
   if (!navigator.serviceWorker) return;
 
@@ -32,26 +33,6 @@ window.onload = function () { const iframe = document.querySelector('iframe'); i
  }
 
  startServiceWorker();
-createIDB();
-
- function createIDB() {
-
-
-    //check for support
-    if (!('indexedDB' in window)) {
-      console.log('This browser doesn\'t support IndexedDB');
-      return;
-    }
-  
-    var dbPromise = idb.open('test-db1', 1);
-    
-  // var dbPromise = idb.open('test-db', 1, function(upgradeDb) {
-  //   var keyValStore = upgradeDb.createObjectStore('keyval');
-  //   keyValStore.put("world", "hello");
-  // });
-  
-   
- }
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */

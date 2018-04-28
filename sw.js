@@ -1,33 +1,13 @@
+
 var staticCacheName = 'restaurant-app-v1';              //This is where all of the js, html files will be cached
 var contentImgsCache = 'restaurant-content-imgs';       //This is where all of the images will be saved
-
-// /**
-//  * openDatabase
-//  *
-//  * @description :: Will open the indexedDB database if there is a service worker
-//  */
-
-// function openDatabase() {
-//   // If the browser doesn't support service worker,
-//   // we don't care about having a database
-//   if (!navigator.serviceWorker) {
-//     return Promise.resolve();
-//   }
-
-//   return idb.open('restaurant', 1, function(upgradeDb) {
-//     var store = upgradeDb.createObjectStore('restaurant', {
-//       keyPath: 'id'
-//     });
-//   });
-// }
-
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
         '/',
-        // 'data/restaurants.json',
+        'data/restaurants.json',
         '/public/js/main.js',
         '/public/js/restaurant_info.js',
         '/public/js/dbhelper.js',
@@ -54,22 +34,57 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   var requestUrl = new URL(event.request.url);
+  // console.log('this is fetching',requestUrl.pathname );
 
-  if (requestUrl.origin === location.origin) {
+    if (requestUrl.pathname.endsWith('restaurants')) {   
+      console.log('intercepting restaurants',requestUrl.pathname);
 
-    // if (requestUrl.pathname.endsWith('/restaurants')) {
-    //   event.respondWith(serveRestaurants(event.request));
-    //   return;
-    // }
+          event.respondWith(        
+              fetch(event.request).then(function(response){
+                  console.log('Response', response);
+                  var clonedRes = response.clone()
+                  var restaurants = clonedRes.json().then(function (data) {                           
+                                                            console.log('writing data   ', data);
+                                                            console.log('window  ', self);
+                                                          for (var key in data) {
+                                                          }
+                                    
+                                                      });
+                  console.log('restaurants', restaurants);
+              return response;  
+              })
+           );
+          return;
 
+
+      // console.log('intercepting restaurants')       
+      // console.log('event', event);       
+      // console.log('event.request', event.request);      
+      // event.respondWith(fetch(event.request)                  
+      // .then(function (res) {
+      //   console.log('this is the response',res.json());
+      //   var clonedRes = res.clone();                        
+      //   clearAllData('restaurants')  
+      //   .then(function () {
+      //     return clonedRes.json();
+      //             })
+      //             .then(function (data) {                           
+      //                 for (var key in data) {
+      //                   console.log('writing data   ', data);
+      //                   writeData('restaurants', data[key])
+      //                 }
+
+      //             });
+      //       return res;                                         
+      //     })
+      // );
+  }
 // ------ Cache photos ----- 
     if (requestUrl.pathname.endsWith('.jpg')) {
         event.respondWith(servePhoto(event.request));
       return;
     }
-
-  }
-
+//fetch everything from the network 
   event.respondWith(
     caches.match(event.request).then(function(response) {
       return response || fetch(event.request);
@@ -79,26 +94,6 @@ self.addEventListener('fetch', function(event) {
 
 
 });
-
-function serveRestaurants(request){
-
-  console.log(openDatabase());
-
-  fetch(event.request)
-  .then(function(response) {
-
-    return response.json();
-
-  })
-  .then(function(restaurants) {
-    console.log('recieved',restaurants);
-    callback(null,restaurants);
-
-  }).catch(function(error) {
-    console.log('There has been a problem with your fetch operation: ', error.message);
-  });
-
-}
 
 
 function servePhoto(request) {
@@ -118,5 +113,3 @@ function servePhoto(request) {
     });
   });
 }
-
-
