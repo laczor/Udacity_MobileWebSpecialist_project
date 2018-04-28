@@ -3,7 +3,8 @@ var app     = express();
 
 // To tell express what should be the routefile for the files
 
-app.use(express.static(__dirname));
+// app.use(express.static(__dirname +'/public/'));
+app.use(express.static(('public')));
 //Store all HTML files in view folder.
 
 app.get('/',function(req,res){
