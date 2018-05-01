@@ -5,38 +5,50 @@ var map;
  * Adding a title to the created google Map
  * 
  */
-window.onload = function () { const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; }
+console.log('readying restaurant.js');
+(function () {
+  console.log('restaurant ready function')
+})()
+
+window.onload = function () {}
+  
+  
+  window.initMap = function ()  {
+    console.log('Restaurant -----  initmap called');
+    fetchRestaurantFromURL((error, restaurant) => {
+      if (error) { // Got an error!
+        console.error(error);
+      } else {
+        self.map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: restaurant.latlng,
+          scrollwheel: false
+        });
+        fillBreadcrumb();
+        DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+        
+        const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; 
+      }
+    });
+  };
+
 
 /**
  * Initialize Google map, called from HTML.
  */
-window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });
-      fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
-    }
-  });
-}
+
 
 /**
  * Get current restaurant from page URL.
  */
-fetchRestaurantFromURL = (callback) => {
+function fetchRestaurantFromURL (callback) {
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant)
     return;
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+    var error = 'No restaurant id in URL'
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {
@@ -45,6 +57,7 @@ fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
+      console.log('Restaurant fetched ... ', restaurant)
       fillRestaurantHTML();
       callback(null, restaurant)
     });
@@ -54,7 +67,7 @@ fetchRestaurantFromURL = (callback) => {
 /**
  * Create restaurant HTML and add it to the webpage
  */
-fillRestaurantHTML = (restaurant = self.restaurant) => {
+function fillRestaurantHTML (restaurant = self.restaurant) {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
@@ -80,7 +93,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
-fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => {
+function fillRestaurantHoursHTML (operatingHours = self.restaurant.operating_hours)  {
   const hours = document.getElementById('restaurant-hours');
   for (let key in operatingHours) {
     const row = document.createElement('tr');
@@ -100,7 +113,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+function fillReviewsHTML(reviews = self.restaurant.reviews) {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -122,7 +135,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 /**
  * Create review HTML and add it to the webpage.
  */
-createReviewHTML = (review) => {
+function createReviewHTML (review){
   const li = document.createElement('li');
   const header = document.createElement('div');
   header.className="review-header";
@@ -154,7 +167,7 @@ createReviewHTML = (review) => {
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-fillBreadcrumb = (restaurant=self.restaurant) => {
+function fillBreadcrumb (restaurant=self.restaurant) {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
@@ -165,7 +178,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
 /**
  * Get a parameter by name from page URL.
  */
-getParameterByName = (name, url) => {
+function getParameterByName (name, url) {
   if (!url)
     url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');

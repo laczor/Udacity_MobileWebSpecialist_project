@@ -1,6 +1,6 @@
 var express = require("express");
 var app     = express();
-
+// var path = require('path');
 // To tell express what should be the routefile for the files
 
 
@@ -41,7 +41,6 @@ var app     = express();
   */
  
 app.use(express.static(('dist')));
-
 
 //Store all HTML files in view folder.
 
