@@ -44,6 +44,11 @@ app.use(express.static(('dist')));
 
 //Store all HTML files in view folder.
 
+app.get('/restaurants',function(req,res){
+  res.sendFile('restaurant.html',{ root: __dirname + '/dist/' });
+  //It will find and locate index.html from View or Scripts
+});
+
 app.get('/',function(req,res){
   res.sendFile('index.html');
   //It will find and locate index.html from View or Scripts

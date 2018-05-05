@@ -42,6 +42,19 @@ self.addEventListener('fetch', function(event) {
         event.respondWith(servePhoto(event.request));
       return;
     }
+
+    if (requestUrl.pathname.includes('restaurants')) {
+      console.log('intercepting restaurant id page');
+      event.respondWith(
+        caches.match('restaurant.html')
+        .then(function(response) {
+            return response;
+        })
+      );
+
+
+      return;
+    }
 // Try to match some stuff from the cache, if not fetch it from the network
   event.respondWith(
     caches.match(event.request)

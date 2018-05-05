@@ -101,6 +101,7 @@ class DBHelper {
         restaurantStore.get(Number(id)).then(
           function(data){
               console.log('found restaurant',data);
+              callback(null,data);
           }
         )
 
@@ -202,7 +203,7 @@ class DBHelper {
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {
-    return (`./restaurant.html?id=${restaurant.id}`);
+    return (`./restaurants?id=${restaurant.id}`);
   }
 
   /**
