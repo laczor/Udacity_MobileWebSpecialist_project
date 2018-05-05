@@ -11,12 +11,31 @@ var markers = []
  * Adding a title to the created google Map
  * 
  */
-window.onload = function () { const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; }
+window.onload = function () {
+   const iframe = document.querySelector('iframe'); iframe.title = "Google Maps";
+
+  /**
+ * Lazy Load Images
+ * Using the described method here : https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/
+ */
+
+}
 
 /**
  * Service worker
  *  
  */
+
+
+
+// function l azyLoadImages(){
+//     var allimages= document.getElementsByTagName('img');
+//     for (var i=0; i<allimages.length; i++) {
+//         if (allimages[i].getAttribute('data-src')) {
+//             allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+//         }
+//     }
+// }
 
  function startServiceWorker() {
   if (!navigator.serviceWorker) return;
@@ -98,8 +117,6 @@ function fillCuisinesHTML  (cuisines = self.cuisines) {
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
-    console.log('Main -----  initmap called');
-    
     let loc = {
     lat: 40.722216,
     lng: -73.987501
@@ -168,9 +185,11 @@ function createRestaurantHTML (restaurant)  {
   const li = document.createElement('li');
 
   const image = document.createElement('img');
-  image.className = 'restaurant-img';
+  image.className = 'restaurant-img lazyload';
   image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
+  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = '';
   li.append(image);
 
   const name = document.createElement('h2');

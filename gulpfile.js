@@ -2,16 +2,13 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     babel = require('gulp-babel'),
-    browserify = require('gulp-browserify'),
-    order = require("gulp-order");
+    order = require("gulp-order"),
+    cleanCSS = require('gulp-clean-css');
     
-// gulp.task('copyHtml', function() {
-//     gulp.src('public/*.html')
-//     .pipe(gulp.dest('dist/'))
-// });
 
 gulp.task('copyCss', function() {
     gulp.src('public/css/*css')
+    .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(gulp.dest('dist/css/'))
 });
 
@@ -28,7 +25,7 @@ gulp.task('js_main', function() {
       "public/js/fetch.js",
       "public/js/idb.js",
       "public/js/dbhelper.js",
-    //   "public/js/idbhelper.js",
+      "public/js/lazysizes.js",
       "public/js/main.js",
     ], { base: './' }))
     .pipe(babel())
@@ -52,25 +49,5 @@ gulp.task('js_info', function() {
     .pipe(concat('bundle_restaurant_info.js'))
     .pipe(gulp.dest('dist/js/'))
 });
-
-// //Using bablify you can use es6 import in the client side
-// https://stackoverflow.com/questions/34276574/browserify-and-babel-gulp-tasks?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-// gulp.task('browserify', function() {
-//     return gulp.src('public/dbhelper.js')
-//         .pipe(browserify({ insertGlobals : true }))
-//         .pipe(gulp.dest('public/js/'));
-// });
-
-
-// gulp.task('browserify', function() {
-//     // Single entry point to browserify 
-//     gulp.src('public/dbhelper.js')
-//         .pipe(browserify({
-//           insertGlobals : true,
-//           debug : true
-//         }))
-//         .pipe(gulp.dest('.public/js/'))
-// });
-
 
 gulp.task('default', ['copyCss','js_info','js_main']);
