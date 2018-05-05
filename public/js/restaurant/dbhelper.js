@@ -1,13 +1,21 @@
 // import idb from 'idb';
-var dbPromise = idb.open('restaurant-db', 1, function(upgradeDb) {
-  switch(upgradeDb.oldVersion) {
-    case 0:
-      var restaurantStore = upgradeDb.createObjectStore('restaurants',{keyPath: 'id'});
-    case 1:
-      var  restaurantStore = upgradeDb.transaction.objectStore('restaurants');
-        restaurantStore.createIndex('id', 'id',{unique: true});
+
+var dbPromise = idb.open('restaurant-db', 1, function (db) {
+  if (!db.objectStoreNames.contains('restaurants')) {
+    db.createObjectStore('restaurants',{keyPath: 'id'});
   }
 });
+
+
+// var dbPromise = idb.open('restaurant-db', 1, function(upgradeDb) {
+//   switch(upgradeDb.oldVersion) {
+//     case 0:
+//       var restaurantStore = upgradeDb.createObjectStore('restaurants',{keyPath: 'id'});
+//     case 1:
+//       var  restaurantStore = upgradeDb.transaction.objectStore('restaurants');
+//         restaurantStore.createIndex('id', 'id',{unique: true});
+//   }
+// });
 /**
  * Common database helper functions.
  */
@@ -96,7 +104,7 @@ class DBHelper {
               console.log('found restaurant',data);
           }
         )
-        
+
         callback(null,data);
 
       });
