@@ -23,7 +23,7 @@ window.onload = function () { const iframe = document.querySelector('iframe'); i
 
   var indexController = this;
 
-  navigator.serviceWorker.register('sw.js').then(function(reg) {
+  navigator.serviceWorker.register('../sw.js',{ scope: '/' }).then(function(reg) {
     if (!navigator.serviceWorker.controller) {
       return;
     }

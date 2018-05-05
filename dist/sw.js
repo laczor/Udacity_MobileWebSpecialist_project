@@ -1,4 +1,4 @@
-var staticCacheName = 'restaurant-app-v01';              //This is where all of the js, html files will be cached
+var staticCacheName = 'restaurant-app-v02';              //This is where all of the js, html files will be cached
 var contentImgsCache = 'restaurant-content-imgs';       //This is where all of the images will be saved
 
 self.addEventListener('install', function(event) {
@@ -8,11 +8,11 @@ self.addEventListener('install', function(event) {
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
         '/',
-        '/dist/js/index.html',
-        '/dist/js/restaurant.html',
-        '/dist/js/bundle_restaurant_info.js',
-        '/dist/js/bundle.js',
-        '/dist/css/styles.css',
+        'index.html',
+        'restaurant.html',
+        '/js/bundle_restaurant_info.js',
+        '/js/bundle.js',
+        '/css/styles.css',
       ]);
     })
   );
