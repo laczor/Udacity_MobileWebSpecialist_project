@@ -1,14 +1,29 @@
 // import idb from 'idb';
 
-console.log('this id idb***********', window.idb);
+var dbPromise = idb.open('restaurant-db', 1, function(upgradeDb) {
+  switch(upgradeDb.oldVersion) {
+    case 0:
+      var restaurantStore = upgradeDb.createObjectStore('restaurants',{keyPath: 'id'});
+    case 1:
+      var  restaurantStore = upgradeDb.transaction.objectStore('restaurants');
+        restaurantStore.createIndex('id', 'id',{unique: true});
+  }
+});
 
-  var dbPromise = window.idb.open('restaurant-store', 1, function (db) {
-    if (!db.objectStoreNames.contains('restaurants')) {
-      db.createObjectStore('restaurants', {keyPath: 'id'});
-    }
-  });
 
-console.log('this should be the idb', dbPromise);
+// var dbPromise = window.idb.open('restaurant-db', 0, function(db) {
+
+
+//   if (!db.objectStoreNames.contains('restaurants')) {
+//     db.createObjectStore('restaurants', {keyPath: 'id'});
+//     restaurantStore = db.transaction.objectStore('restaurants');
+//     restaurantStore.createIndex('id', 'id',{unique: true});
+//   }
+
+//     db.createObjectStore('restaurants', { keyPath: 'id' });
+
+// });
+
 /**
  * Common database helper functions.
  */
@@ -40,11 +55,31 @@ class DBHelper {
       return response.json();
     })
     .then(function(restaurants) {
-      console.log('recieved',restaurants);
-      callback(null,restaurants);
 
+        dbPromise.then(function(db) {
+          var tx = db.transaction('restaurants', 'readwrite');
+          var restaurantStore = tx.objectStore('restaurants');
+
+          restaurants.map(function(el){
+            restaurantStore.put(el);
+          })
+
+          return tx.complete;
+        })
+        callback(null,restaurants);
+
+      
     }).catch(function(error) {
-      console.log('There has been a problem with your fetch operation: ', error.message);
+        dbPromise.then(function(db) {
+
+        var tx = db.transaction('restaurants', 'readwrite');
+        var restaurantStore = tx.objectStore('restaurants');
+
+        restaurantStore.getAll().then(function(data){
+            callback(null,data);
+        })
+
+      });
     });
   }
 
@@ -53,7 +88,7 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-
+    console.log('fetchin restaurant by id', id);
     fetch(DBHelper.DATABASE_URL+'/'+id)
     .then(function(response) {
 
@@ -61,11 +96,22 @@ class DBHelper {
 
     })
     .then(function(restaurant) {
-      console.log('recieved',restaurant);
       callback(null,restaurant);
 
     }).catch(function(error) {
-      console.log('There has been a problem with your fetch operation: ', error.message);
+      console.log('now it should fetch data from the idb by id');
+      dbPromise.then(function(db) {
+
+        var tx = db.transaction('restaurants', 'readwrite');
+        var restaurantStore = tx.objectStore('restaurants');
+        restaurantStore.get(Number(id)).then(
+          function(data){
+              console.log('found restaurant',data);
+          }
+        )
+
+      });
+      
     });
   }
 

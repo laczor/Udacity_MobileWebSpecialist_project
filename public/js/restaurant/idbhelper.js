@@ -1,9 +1,9 @@
 
-var dbPromise = idb.open('restaurant-store', 1, function (db) {
-  if (!db.objectStoreNames.contains('restaurants')) {
-    db.createObjectStore('restaurants', {keyPath: 'id'});
-  }
-});
+// var dbPromise = idb.open('restaurant-store', 1, function (db) {
+//   if (!db.objectStoreNames.contains('restaurants')) {
+//     db.createObjectStore('restaurants', {keyPath: 'id'});
+//   }
+// });
 
 //You have to return always the dbPromise object to check the response!!
 function writeData(st, data) {

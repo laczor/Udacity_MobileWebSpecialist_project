@@ -36,17 +36,27 @@ self.addEventListener('activate', function(event) {
 
 self.addEventListener('fetch', function(event) {
   var requestUrl = new URL(event.request.url);
-  console.log('this is fetching',requestUrl.pathname );
+  // console.log('this is fetching',requestUrl.pathname );
 // ------ Cache photos ----- 
     if (requestUrl.pathname.endsWith('.jpg')) {
         event.respondWith(servePhoto(event.request));
       return;
     }
-// //fetch everything from the network 
+// Try to match some stuff from the cache, if not fetch it from the network
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then(function(response) {
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request)
+            .then(function(res) {
+                  return res;
+            })
+            .catch(function(err) {
+            });
+        }
+      })
   );
 
 

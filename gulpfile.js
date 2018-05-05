@@ -28,7 +28,7 @@ gulp.task('js_main', function() {
       "public/js/fetch.js",
       "public/js/idb.js",
       "public/js/dbhelper.js",
-      "public/js/idbhelper.js",
+    //   "public/js/idbhelper.js",
       "public/js/main.js",
     ], { base: './' }))
     .pipe(babel())
@@ -44,7 +44,7 @@ gulp.task('js_info', function() {
         "public/js/restaurant/fetch.js",
         "public/js/restaurant/idb.js",
         "public/js/restaurant/dbhelper.js",
-        "public/js/restaurant/idbhelper.js",
+        // "public/js/restaurant/idbhelper.js",
         "public/js/restaurant/restaurant_info.js",
       ], { base: './' }))
     .pipe(babel())
