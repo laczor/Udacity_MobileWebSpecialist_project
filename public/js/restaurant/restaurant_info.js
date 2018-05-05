@@ -1,20 +1,10 @@
 let restaurant;
 var map;
 
-/**
- * Adding a title to the created google Map
- * 
- */
-console.log('readying restaurant.js');
-(function () {
-  console.log('restaurant ready function')
-})()
-
 window.onload = function () {}
   
   
   window.initMap = function ()  {
-    console.log('Restaurant -----  initmap called');
     fetchRestaurantFromURL((error, restaurant) => {
       if (error) { // Got an error!
         console.error(error);
@@ -57,7 +47,6 @@ function fetchRestaurantFromURL (callback) {
         console.error(error);
         return;
       }
-      console.log('Restaurant fetched ... ', restaurant)
       fillRestaurantHTML();
       callback(null, restaurant)
     });

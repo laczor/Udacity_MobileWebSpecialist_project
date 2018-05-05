@@ -1,22 +1,13 @@
-// import idb from 'idb';
 
+// --- *** idb object is loeaded before the dbhelper, so window.idb can be accessed *** --- //
 
-var dbPromise = idb.open('restaurant-db', 1, function (db) {
+// --- *** Creating a restaurant 'table' in the IndexedDB *** --- //
+var dbPromise = window.idb.open('restaurant-db', 1, function (db) {
   if (!db.objectStoreNames.contains('restaurants')) {
     db.createObjectStore('restaurants',{keyPath: 'id'});
   }
 });
 
-
-// var dbPromise = idb.open('restaurant-db', 1, function(upgradeDb) {
-//   switch(upgradeDb.oldVersion) {
-//     case 0:
-//       var restaurantStore = upgradeDb.createObjectStore('restaurants',{keyPath: 'id'});
-//     case 1:
-//       var  restaurantStore = upgradeDb.transaction.objectStore('restaurants');
-//         restaurantStore.createIndex('id', 'id',{unique: true});
-//   }
-// });
 
 /**
  * Common database helper functions.
@@ -41,7 +32,7 @@ class DBHelper {
   }
 
   /**
-   * Fetch all restaurants.
+   * Fetch all restaurants form network first than cache.
    */
   static fetchRestaurants(callback) {
     fetch(DBHelper.DATABASE_URL)
@@ -49,29 +40,28 @@ class DBHelper {
       return response.json();
     })
     .then(function(restaurants) {
-
+      //Storing objects recieved in the response seperately in the indexedDb
         dbPromise.then(function(db) {
-          var tx = db.transaction('restaurants', 'readwrite');
-          var restaurantStore = tx.objectStore('restaurants');
+              var tx = db.transaction('restaurants', 'readwrite');
+              var restaurantStore = tx.objectStore('restaurants');
 
-          restaurants.map(function(el){
-            restaurantStore.put(el);
-          })
+              restaurants.map(function(el){
+                restaurantStore.put(el);
+              })
 
-          return tx.complete;
+              return tx.complete;
         })
         callback(null,restaurants);
 
-      
     }).catch(function(error) {
+      //Fetching data from indexedDB if there is no connection
         dbPromise.then(function(db) {
+            var tx = db.transaction('restaurants', 'readwrite');
+            var restaurantStore = tx.objectStore('restaurants');
 
-        var tx = db.transaction('restaurants', 'readwrite');
-        var restaurantStore = tx.objectStore('restaurants');
-
-        restaurantStore.getAll().then(function(data){
-            callback(null,data);
-        })
+            restaurantStore.getAll().then(function(data){
+                callback(null,data);
+            })
 
       });
     });
@@ -82,28 +72,25 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    console.log('fetchin restaurant by id', id);
     fetch(DBHelper.DATABASE_URL+'/'+id)
     .then(function(response) {
-
-      return response.json();
-
+        return response.json();
     })
     .then(function(restaurant) {
-      callback(null,restaurant);
+        callback(null,restaurant);
 
     }).catch(function(error) {
-      console.log('now it should fetch data from the idb by id');
       dbPromise.then(function(db) {
 
-        var tx = db.transaction('restaurants', 'readwrite');
-        var restaurantStore = tx.objectStore('restaurants');
-        restaurantStore.get(Number(id)).then(
-          function(data){
-              console.log('found restaurant',data);
-              callback(null,data);
-          }
-        )
+          var tx = db.transaction('restaurants', 'readwrite');
+          var restaurantStore = tx.objectStore('restaurants');
+      //Get the object from the OjbectStore by it's id, it is important that the id keypath is a type of number, so we should search number types
+          restaurantStore.get(Number(id)).then(
+              function(data){
+                  callback(null,data);
+              }
+
+          )
 
       });
       
