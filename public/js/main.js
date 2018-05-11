@@ -187,9 +187,10 @@ function createRestaurantHTML (restaurant)  {
   const image = document.createElement('img');
   image.className = 'restaurant-img lazyload';
   image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
-  image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
-  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.src = '';
+  // image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
+  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.srcset = DBHelper.imageUrlForRestaurantMobile(restaurant) + " 350w"
+  // image.src = '';
   li.append(image);
 
   const name = document.createElement('h2');
