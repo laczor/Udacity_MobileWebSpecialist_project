@@ -7,36 +7,18 @@ let restaurants,
 var map
 var markers = []
 
+var mapIframe;
 /**
  * Adding a title to the created google Map
  * 
  */
 window.onload = function () {
-   const iframe = document.querySelector('iframe'); iframe.title = "Google Maps";
-
-  /**
- * Lazy Load Images
- * Using the described method here : https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/
- */
-
-}
+  }
 
 /**
  * Service worker
  *  
  */
-
-
-
-// function l azyLoadImages(){
-//     var allimages= document.getElementsByTagName('img');
-//     for (var i=0; i<allimages.length; i++) {
-//         if (allimages[i].getAttribute('data-src')) {
-//             allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
-//         }
-//     }
-// }
-
  function startServiceWorker() {
   if (!navigator.serviceWorker) return;
 
@@ -56,8 +38,35 @@ window.onload = function () {
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
+  document.getElementById('map-toggle').addEventListener('click',function (e) {
+      toggleMapView();
+  })
+  // lazyLoadMap();
 });
 
+
+function hideLoader(){
+  document.getElementById('maincontent').style.display = 'flex';
+  document.getElementById('loader-div').style.display = 'none';
+}
+
+function toggleMapView(){
+  var $map = document.getElementById('map-container');
+
+  if($map.style.display =="none" || $map.style.display ==""){
+    $map.style.display = 'flex';
+    document.getElementById('map-toggle').innerText = 'Hide map';
+
+   mapIframe = document.querySelector('iframe')
+   if(mapIframe.title && mapIframe.title == ""){
+       mapIframe.title = "Google Maps"
+    }
+
+  }else{
+    $map.style.display = 'none';
+    document.getElementById('map-toggle').innerText = 'Show map';
+  }
+}
 /**
  * Fetch all neighborhoods and set their HTML.
  */
@@ -111,6 +120,9 @@ function fillCuisinesHTML  (cuisines = self.cuisines) {
     option.value = cuisine;
     select.append(option);
   });
+
+  updateRestaurants();
+  hideLoader();
 }
 
 /**
@@ -126,7 +138,9 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
-  updateRestaurants();
+  // document.getElementById('map-container').style.display = 'block';
+  // const iframe = document.querySelector('iframe'); iframe.title = "Google Maps";    
+  // updateRestaurants();
 }
 
 /**
