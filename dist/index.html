@@ -14,6 +14,24 @@
       <h1><a href="/">Restaurant Reviews</a></h1>
     </nav>
     <style>
+
+      nav {
+            width: 100%;
+            height: 80px;
+            background-color: #252831;
+            text-align:center;
+          }
+          nav h1 {
+            margin: auto;
+            padding-top: 20px;
+          }
+          nav h1 a {
+            color: #fff;
+            font-size: 14pt;
+            font-weight: 200;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+          }
       .pre_loading{
         background-color: #3397DB;
         padding: 15px;
@@ -24,7 +42,7 @@
         flex-direction: column;
         justify-content: center;
       }
-          .load-wrapp {
+      .load-wrapp {
                 box-shadow: 0 4px 8px 0 rgba(0,0,0,.4);
                 display: flex;
                 height: 400px;
@@ -34,7 +52,7 @@
                 text-align: center;
                 flex-direction: column;
                 background-color: white;
-          }
+      }
         .load-wrapp .loading .loading-text{
           margin-top: 20px;
           font-size: 20px;
@@ -69,7 +87,28 @@
             0% {opacity: 0;}
             100% {opacity: 1;}
         }
-    
+
+        #footer {
+          background-color: #252831;
+          color: #aaa;
+          font-size: 8pt;
+          letter-spacing: 1px;
+          padding: 25px;
+          text-align: center;
+          text-transform: uppercase;
+        }
+        #footer a{
+          color: #3397db;
+          text-decoration: none;
+        }
+        @media screen and (max-width: 415px) {
+          nav{
+            height: initial;
+          }
+          nav h1{
+            padding-bottom: 15px;
+          }
+        }
     </style>
   </header> 
   

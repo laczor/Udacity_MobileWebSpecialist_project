@@ -12,8 +12,7 @@ var mapIframe;
  * Adding a title to the created google Map
  * 
  */
-window.onload = function () {
-  }
+window.onload = function () {}
 
 /**
  * Service worker
@@ -41,6 +40,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   document.getElementById('map-toggle').addEventListener('click',function (e) {
       toggleMapView();
   })
+
   // lazyLoadMap();
 });
 
@@ -201,8 +201,9 @@ function createRestaurantHTML (restaurant)  {
   const image = document.createElement('img');
   image.className = 'restaurant-img lazyload';
   image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
-  // image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
+  image.src = "";
+  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.srcset = DBHelper.imageUrlForRestaurantMobile(restaurant) + " 350w"
   // image.src = '';
   li.append(image);

@@ -74,6 +74,4 @@ gulp.task("copyImgsMobile", function () {
       .pipe(gulp.dest("dist/img"));
   });
 
-
-
 gulp.task('default', ['copyCss','js_info','js_main','copyImgsDesktop','copyImgsMobile']);
