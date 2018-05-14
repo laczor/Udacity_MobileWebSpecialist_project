@@ -1,6 +1,4 @@
 
-// import idb from 'idb';
-
 let restaurants,
   neighborhoods,
   cuisines
@@ -8,15 +6,10 @@ var map
 var markers = []
 
 var mapIframe;
-/**
- * Adding a title to the created google Map
- * 
- */
-window.onload = function () {}
 
 /**
- * Service worker
- *  
+ * Will initate the service worker with global scope.
+ * @function startServiceWorker
  */
  function startServiceWorker() {
   if (!navigator.serviceWorker) return;
@@ -32,7 +25,8 @@ window.onload = function () {}
 
  startServiceWorker();
 /**
- * Fetch neighborhoods and cuisines as soon as the page is loaded.
+ * Will fetch the data from the server to be displayed at the frontend
+ * @event DOMContentLoaded
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
@@ -41,15 +35,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
       toggleMapView();
   })
 
-  // lazyLoadMap();
 });
 
-
+/**
+ * Will set the display to none for the loader image, after the pages has been fully loaded
+ * @function hideLoader
+ */
 function hideLoader(){
   document.getElementById('maincontent').style.display = 'flex';
   document.getElementById('loader-div').style.display = 'none';
 }
 
+/**
+ * Will set the display of the map to show or hide
+ * @function toggleMapView
+ */
 function toggleMapView(){
   var $map = document.getElementById('map-container');
 
@@ -69,7 +69,9 @@ function toggleMapView(){
 }
 /**
  * Fetch all neighborhoods and set their HTML.
+ * @function fetchNeighborhoods
  */
+
 function fetchNeighborhoods () {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
@@ -83,6 +85,7 @@ function fetchNeighborhoods () {
 
 /**
  * Set neighborhoods HTML.
+ *  * @function fillNeighborhoodsHTML
  */
 function fillNeighborhoodsHTML (neighborhoods = self.neighborhoods) {
   const select = document.getElementById('neighborhoods-select');
@@ -93,9 +96,9 @@ function fillNeighborhoodsHTML (neighborhoods = self.neighborhoods) {
     select.append(option);
   });
 }
-
-/**
+ /**
  * Fetch all cuisines and set their HTML.
+ * @function fetchCuisines
  */
 function fetchCuisines () {
   DBHelper.fetchCuisines((error, cuisines) => {
@@ -108,8 +111,9 @@ function fetchCuisines () {
   });
 }
 
-/**
+ /**
  * Set cuisines HTML.
+ * @function fillCuisinesHTML
  */
 function fillCuisinesHTML  (cuisines = self.cuisines) {
   const select = document.getElementById('cuisines-select');
@@ -138,13 +142,11 @@ window.initMap = () => {
     center: loc,
     scrollwheel: false
   });
-  // document.getElementById('map-container').style.display = 'block';
-  // const iframe = document.querySelector('iframe'); iframe.title = "Google Maps";    
-  // updateRestaurants();
 }
 
 /**
  * Update page and map for current restaurants.
+ * @function updateRestaurants
  */
 function updateRestaurants () {
   const cSelect = document.getElementById('cuisines-select');
@@ -166,8 +168,9 @@ function updateRestaurants () {
   })
 }
 
-/**
+ /**
  * Clear current restaurants, their HTML and remove their map markers.
+ * @function resetRestaurants
  */
 function resetRestaurants (restaurants) {
   // Remove all restaurants
@@ -180,9 +183,10 @@ function resetRestaurants (restaurants) {
   self.markers = [];
   self.restaurants = restaurants;
 }
-
-/**
+ 
+ /**
  * Create all restaurants HTML and add them to the webpage.
+ * @function fillRestaurantsHTML
  */
 function fillRestaurantsHTML (restaurants = self.restaurants) {
   const ul = document.getElementById('restaurants-list');
@@ -192,9 +196,11 @@ function fillRestaurantsHTML (restaurants = self.restaurants) {
   addMarkersToMap();
 }
 
-/**
- * Create restaurant HTML.
+ /**
+ *  Create restaurant HTML.
+ * @function createRestaurantHTML
  */
+ 
 function createRestaurantHTML (restaurant)  {
   const li = document.createElement('li');
 
@@ -202,10 +208,8 @@ function createRestaurantHTML (restaurant)  {
   image.className = 'restaurant-img lazyload';
   image.alt ='Restaurant of ' + restaurant.name + 'with cuisine type of ' + restaurant.cuisine_type;
   image.setAttribute('data-src',DBHelper.imageUrlForRestaurant(restaurant));
-  image.src = "";
-  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.srcset = DBHelper.imageUrlForRestaurantMobile(restaurant) + " 350w"
-  // image.src = '';
+  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  // image.srcset = DBHelper.imageUrlForRestaurantMobile(restaurant) + " 350w"
   li.append(image);
 
   const name = document.createElement('h2');
@@ -233,8 +237,9 @@ function createRestaurantHTML (restaurant)  {
   return li
 }
 
-/**
- * Add markers for current restaurants to the map.
+ /**
+ *  Add markers for current restaurants to the map.
+ * @function createRestaurantHTML
  */
 function addMarkersToMap (restaurants = self.restaurants) {
   restaurants.forEach(restaurant => {

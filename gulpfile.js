@@ -15,13 +15,6 @@ gulp.task('copyCss', function() {
     .pipe(gulp.dest('dist/css/'))
 });
 
-//This would copy simply the images
-
-// gulp.task('copyImg', function() {
-//     gulp.src('public/img/*.jpg')
-//     .pipe(gulp.dest('dist/img/'))
-// });
-
 gulp.task('js_main', function() {
     gulp.src('public/js/*.js')
     .pipe(gulp.src("public/js/*.js")) // gulp.src passes through input
@@ -30,7 +23,6 @@ gulp.task('js_main', function() {
       "public/js/fetch.js",
       "public/js/idb.js",
       "public/js/dbhelper.js",
-    //   "public/js/lazysizes.js",
       "public/js/main.js",
     ], { base: './' }))
     .pipe(babel())
@@ -47,7 +39,6 @@ gulp.task('js_info', function() {
         "public/js/restaurant/fetch.js",
         "public/js/restaurant/idb.js",
         "public/js/restaurant/dbhelper.js",
-        // "public/js/restaurant/idbhelper.js",
         "public/js/restaurant/restaurant_info.js",
       ], { base: './' }))
     .pipe(babel())
