@@ -40,6 +40,11 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   display: none;
   flex-wrap: wrap;
 }
+#maincontent-restaurant {
+  background-color: #f3f3f3;
+  display: flex;
+  flex-wrap: wrap;
+}
 #footer {
   background-color: #252831;
   color: #aaa;
@@ -238,6 +243,13 @@ nav h1 a {
   width: 100%;
   display: none;
 }
+
+#map-container-restaurant{
+  width: 100%;
+  display: flex;
+}
+
+
 #map-toggle{
   border: none;
   background-color: #252831;
@@ -254,6 +266,10 @@ nav h1 a {
   border: white 1px solid;
 }
 .inside #map-container {
+  height: 600px;
+  width: 47%
+}
+.inside #map-container-restaurant {
   height: 600px;
   width: 47%
 }
@@ -312,7 +328,7 @@ nav h1 a {
   width: 100%;
   order: 5;
 }
-#reviews-container h2 {  
+#reviews-container h3 {  
   color: #f58500;
   font-size: 24pt;
   font-weight: 300;
@@ -452,6 +468,11 @@ margin: 10px 20px;
     height: 300px;
     width: 100%;
   }
+  .inside #map-container-restaurant {
+    height: 300px;
+    width: 100%;
+  }
+  
 }
 
 

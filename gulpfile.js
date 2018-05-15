@@ -56,6 +56,70 @@ gulp.task("copyImgsDesktop", function () {
       .pipe(gulp.dest("dist/img"));
   });
 
+//   gulp.task("fav1", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 57, height:57}))
+//       .pipe(rename('apple-icon-57x57.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav2", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 60, height:60}))
+//       .pipe(rename('apple-icon-60x60.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav3", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 72, height:72}))
+//       .pipe(rename('apple-icon-72x72.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav4", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 76, height:76}))
+//       .pipe(rename('apple-icon-76x76.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav5", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 114, height:114}))
+//       .pipe(rename('apple-icon-114x114.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+
+//   gulp.task("fav6", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 120, height:120}))
+//       .pipe(rename('apple-icon-120x120.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav7", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 144, height:144}))
+//       .pipe(rename('apple-icon-144x144.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav8", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 152, height:152}))
+//       .pipe(rename('apple-icon-152x152.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
+//   gulp.task("fav9", function () {
+//     gulp.src("public/img/favicon/*.{jpg,png}")
+//       .pipe(imageResize({ width : 180, height:180}))
+//       .pipe(rename('apple-icon-180x180.png'))
+//       .pipe(imagemin())
+//       .pipe(gulp.dest("dist/img/icons"));
+//   });
 
 gulp.task("copyImgsMobile", function () {
     gulp.src("public/img/*.{jpg,png}")
@@ -66,3 +130,4 @@ gulp.task("copyImgsMobile", function () {
   });
 
 gulp.task('default', ['copyCss','js_info','js_main','copyImgsDesktop','copyImgsMobile']);
+// gulp.task('default', ['copyCss','js_info','js_main','copyImgsDesktop','copyImgsMobile','fav1','fav2','fav3','fav4','fav5','fav6','fav7','fav8','fav9']);

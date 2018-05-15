@@ -17,7 +17,7 @@ window.onload = function () {}
         fillBreadcrumb();
         DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
         
-        const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; 
+        // const iframe = document.querySelector('iframe'); iframe.title = "Google Maps"; 
       }
     });
   };

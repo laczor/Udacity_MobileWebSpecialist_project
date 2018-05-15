@@ -62,7 +62,7 @@ self.addEventListener('fetch', function(event) {
           return response;
         } else {
           return fetch(event.request)
-            .then(function(res) {
+          .then(function(res) {
                   return res;
             })
             .catch(function(err) {
